@@ -172,7 +172,7 @@ for more information.
     will have statically granted permissions beyond those provided by the RBAC configuration or IAM.
     Defaults to `false`
 
-* `enable_shielded_nodes` - (Optional, [Beta](https://terraform.io/docs/providers/google/guides/provider_versions.html)) Enable Shielded Nodes features on all nodes in this cluster.  Defaults to `false`.
+* `enable_shielded_nodes` - (Optional) Enable Shielded Nodes features on all nodes in this cluster.  Defaults to `false`.
 
 * `initial_node_count` - (Optional) The number of nodes to create in this
 cluster's default node pool. In regional or multi-zonal clusters, this is the
@@ -321,12 +321,12 @@ The `addons_config` block supports:
     It can only be disabled if the nodes already do not have network policies enabled.
     Defaults to disabled; set `disabled = false` to enable.
 
+* `cloudrun_config` - (Optional).
+    The status of the CloudRun addon. It is disabled by default.
+    Set `disabled = false` to enable.
+
 * `istio_config` - (Optional, [Beta](https://terraform.io/docs/providers/google/guides/provider_versions.html)).
     Structure is documented below.
-
-* `cloudrun_config` - (Optional, [Beta](https://terraform.io/docs/providers/google/guides/provider_versions.html)).
-    The status of the CloudRun addon. It requires `istio_config` enabled. It is disabled by default.
-    Set `disabled = false` to enable. This addon can only be enabled at cluster creation time.
 
 * `dns_cache_config` - (Optional, [Beta](https://terraform.io/docs/providers/google/guides/provider_versions.html)).
     The status of the NodeLocal DNSCache addon. It is disabled by default.
@@ -337,6 +337,9 @@ The `addons_config` block supports:
 
 * `gce_persistent_disk_csi_driver_config` - (Optional, [Beta](https://terraform.io/docs/providers/google/guides/provider_versions.html)).
     Whether this cluster should enable the Google Compute Engine Persistent Disk Container Storage Interface (CSI) Driver. Defaults to disabled; set `enabled = true` to enable. 
+
+* `kalm_config` - (Optional, [Beta](https://terraform.io/docs/providers/google/guides/provider_versions.html)).
+    Configuration for the KALM addon, which manages the lifecycle of k8s. It is disabled by default; Set `enabled = true` to enable. 
 
 This example `addons_config` disables two addons:
 
@@ -726,6 +729,8 @@ The `vertical_pod_autoscaling` block supports:
 
 In addition to the arguments listed above, the following computed attributes are
 exported:
+
+* `id` - an identifier for the resource with format `projects/{{project}}/locations/{{zone}}/clusters/{{name}}`
 
 * `endpoint` - The IP address of this cluster's Kubernetes master.
 
